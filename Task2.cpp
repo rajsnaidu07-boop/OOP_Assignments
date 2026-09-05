@@ -1,5 +1,7 @@
 #include <iostream>
+#include <string>
 using namespace std;
+
 class Student {
 private:
     string Name;
@@ -10,19 +12,23 @@ public:
     void display() {
         cout << "Name: " << Name << ", DOB: " << DOB << endl;
     }
+    friend void showGrade(class Grade g); 
 };
 class Grade : public Student {
-    int marks;
+private:
+    int Marks;
 public:
-    Grade(string name, int dob, int m) : Student(name, dob), marks(m) {}
-    void showGrade() {
-        display();
-        cout << "Marks: " << marks << ", DOB (protected access): " << DOB << endl;
-    }
+    Grade(string name, int dob, int marks) : Student(name, dob), Marks(marks) {}
+    friend void showGrade(Grade g);
 };
+void showGrade(Grade g) {
+    g.display();
+    cout << "Marks: " << g.Marks << endl;
+    cout << "DOB(Protected access): " << g.DOB << endl;
+}
+
 int main() {
     Grade myDetails("Raj", 2007, 85);
-    myDetails.showGrade();
+    showGrade(myDetails);
     return 0;
-}
 }
