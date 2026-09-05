@@ -6,7 +6,7 @@ int main() {
     char grade='A';
     bool isStudent=true;
     const int MAX_MARKS=100;
-    int Stud_age,
+    int Stud_age;
     int a=10,b=3;
     cout<<"Age: " <<age<<",Height: " <<height<< ",Grade: " <<grade<<endl;
     cout<<"Is Student:"<<isStudent<<",Max Marks:"<<MAX_MARKS<<endl;
