@@ -1,0 +1,98 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class CourseSystem {
+private:
+    string studentName;
+    int rollNo;
+    string availableCourses[4] = {"AI & ML", "Civil", "Electronics", "Robotics"};
+    int seats[4] = {2, 3, 2, 3}; // Seat limit for each course
+    string myCourses[4];
+    int enrolledCount = 0;
+
+public:
+    void setStudent(string name, int roll) {
+        studentName = name;
+        rollNo = roll;
+    }
+
+    void showAvailable() {
+        cout << "\n--- Available Courses ---\n";
+        for (int i = 0; i < 4; i++) {
+            cout << i + 1 << ". " << availableCourses[i]
+                 << " (Seats left: " << seats[i] << ")\n";
+        }
+    }
+
+    void registerCourse() {
+        showAvailable();
+        int c;
+        cout << "Enter course number (1-4): ";
+        cin >> c;
+
+        if (c < 1 || c > 4) {
+            cout << "Invalid choice!\n";
+            return;
+        }
+
+        string selected = availableCourses[c - 1];
+
+        // Check duplicate registration
+        for (int i = 0; i < enrolledCount; i++) {
+            if (myCourses[i] == selected) {
+                cout << "Already registered in " << selected << "!\n";
+                return;
+            }
+        }
+
+        // Check seat availability
+        if (seats[c - 1] <= 0) {
+            cout << "Sorry, no seats left in " << selected << "!\n";
+            return;
+        }
+
+        myCourses[enrolledCount++] = selected;
+        seats[c - 1]--;
+        cout << "Successfully registered for " << selected << "!\n";
+    }
+
+    void showMyCourses() {
+        cout << "\n--- Registration Receipt ---\n";
+        cout << "Name: " << studentName << " | Roll No: " << rollNo << "\n";
+        if (enrolledCount == 0) {
+            cout << "No courses registered yet.\n";
+            return;
+        }
+        for (int i = 0; i < enrolledCount; i++) {
+            cout << i + 1 << ". " << myCourses[i] << "\n";
+        }
+    }
+};
+
+int main() {
+    CourseSystem app;
+    string name;
+    int roll, choice;
+    cout<<"Welcome"<<endl;
+    cout<<"\nAJEENKYA DY PATIL UNIVERSITY\n"<<endl;
+    cout << "=== College Course Registration ===\n";
+    cout << "Enter Student Name: ";
+    getline(cin, name);
+    cout << "Enter Roll Number: ";
+    cin >> roll;
+    app.setStudent(name, roll);
+
+    do {
+        cout << "\n1. View Courses\n2. Register Course\n3. View My Courses\n4. Exit\nChoice: ";
+        cin >> choice;
+
+        if (choice == 1) app.showAvailable();
+        else if (choice == 2) app.registerCourse();
+        else if (choice == 3) app.showMyCourses();
+        else if (choice == 4) cout << "Thank you!\n";
+        else cout << "Invalid option!\n";
+    } while (choice != 4);
+
+    return 0;
+}
